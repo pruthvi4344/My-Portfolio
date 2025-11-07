@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fffbeb;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            border: 2px solid #ffd700;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #ffd700;
+            border: none;
+            border-radius: 8px;
+            color: #333;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #ffed4a;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Update Profile Image</h1>
+        <form  method="POST" enctype="multipart/form-data">
+            {%csrf_token%}
+
+            
+              <div class="form-group">
+                <label>Current Profile Image</label>
+                {% if profileimgdetails.profileimg %}
+                    <img src="{{ profileimgdetails.profileimg.url }}" alt=" Current image is {{ profileimgdetails.profileimg }}" style="width: 150px; height: auto; display: block;">
+                    <p>{{ profileimgdetails.profileimg }}</p>  <!-- Display File Name -->
+                {% else %}
+                    <p>No image uploaded</p>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="skills">Upload New image</label>
+                <input type="file" name="profileimg" value="{{profileimgdetails.profileimg.url}}">
+              </div>   
+
+
+              <div class="form-group">
+                <label>Current Resume</label>
+                {% if profileimgdetails.resume %}
+                <object data="{{ profileimgdetails.resume.url }}" type="application/pdf" width="100%" height="250px">
+                    <p>Preview not available. <a href="{{ profileimgdetails.resume.url }}" target="_blank">View Full Resume</a></p>
+                </object>
+            {% else %}
+                <p>No resume uploaded.</p>
+            {% endif %}
+            </div>
+              <div class="form-group">
+                <label for="skills">Upload Resume</label>
+                <input type="file" name="resume" id="projectName" value="{{profileimgdetails.resume.url}}" />
+              </div>   
+            <button type="submit" class="btn">Save Changes</button>
+            
+            
+        </form>
+        <button type="submit" class="btn" style="margin-top: 5px ;"><a style="text-decoration: none; color: black;" href="{% url 'adminpanel' %}" class="btn">Cancel</a></button>
+    </div>
+
+    <div class="notification" id="notification">Project updated successfully!</div>
+
+    <script>
+        const form = document.getElementById('updateProjectForm');
+        const notification = document.getElementById('notification');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show notification
+            notification.style.display = 'block';
+            
+            // Hide notification after 3 seconds
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+            
+            // Optional: Reset form
+            form.reset();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio Admin</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+      }
+
+      .admin-container {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        width: 250px;
+        background-color: #333;
+        color: white;
+        padding: 20px;
+      }
+
+      .logo {
+        color: #ffd700;
+        margin-bottom: 30px;
+        font-size: 1.5rem;
+      }
+
+      .sidebar nav ul {
+        list-style: none;
+      }
+
+      .sidebar nav ul li {
+        margin-bottom: 10px;
+      }
+
+      .sidebar nav ul li a {
+        color: white;
+        text-decoration: none;
+        display: block;
+        padding: 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+      }
+
+      .sidebar nav ul li a:hover,
+      .sidebar nav ul li a.active {
+        background-color: #ffd700;
+        color: #333;
+      }
+
+      .main-content {
+        flex: 1;
+        padding: 20px;
+      }
+
+      /* Dashboard Styles */
+      .dashboard-view {
+        padding: 20px;
+      }
+
+      .welcome-card {
+        background-color: white;
+        border-radius: 10px;
+        padding: 40px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      .welcome-card h1 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 2.5rem;
+      }
+
+      .welcome-card p {
+        color: #666;
+        font-size: 1.2rem;
+      }
+
+      /* Project Form Styles */
+      .project-form {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .project-form h2 {
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+
+      .form-group textarea {
+        height: 100px;
+        resize: vertical;
+      }
+
+      .form-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .form-buttons button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: opacity 0.3s;
+      }
+
+      .form-buttons button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .submit-btn {
+        background-color: #ffd700;
+        color: #333;
+      }
+
+      .modify-btn {
+        background-color: #4caf50;
+        color: white;
+        padding: 5px 15px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        margin-right: 5px;
+        font-size: 12px;
+      }
+
+      .delete-btn {
+        background-color: #dc3545;
+        color: white;
+      }
+
+      /* Table Styles */
+      .projects-table {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .projects-table li {
+        list-style: none;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #fff7d6;
+      }
+
+      .action-buttons button {
+        padding: 5px 15px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        margin-right: 5px;
+        font-size: 12px;
+      }
+
+      .edit-btn {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      .delete-btn {
+        padding: 5px 15px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        margin-right: 5px;
+        font-size: 12px;
+        background-color: #dc3545;
+        color: white;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="admin-container">
+      <aside class="sidebar">
+        <h2 class="logo">Portfolio Admin</h2>
+        <nav>
+          <ul>
+            <li><a href="#" id="dashboardLink" class="active">Dashboard</a></li>
+            <li><a href="#" id="profileimg">Profile Image</a></li>
+            <li><a href="#" id="socialmediaLink">Social Media</a></li>
+            <li><a href="#" id="skillsLink">Skills</a></li>
+            <li><a href="#" id="aboutLink">About You</a></li>
+            <li><a href="#" id="projectsLink">Projects</a></li>
+            <li><a href="{%url 'logout'%}" id="logout">Logout</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <!-- Dashboard View -->
+        <div id="dashboardView" class="dashboard-view">
+          <div class="welcome-card">
+            <h1>Welcome, {{ user.username }} 👋</h1>
+            <p>Manage your portfolio projects from here</p>
+          </div>
+        </div>
+
+
+      
+        <!-- about me -->
+        <div id="aboutView" class="projects-view" style="display: none">
+          <div class="header">
+            <h1>About Info!!</h1>
+          </div>
+
+          <!-- skill Form -->
+          <div class="project-form">
+            <h2>About you</h2>
+
+            <form id="projectForm" method="POST">
+              {% csrf_token %}
+
+              <input type="hidden" name="form_type" value="about" />
+              <div class="form-group">
+                <label for="skills">Enter you details </label>
+                <input type="text" name="content" id="projectName" required />
+              </div>
+
+              <div class="form-buttons">
+                <button type="submit" id="submitBtn" class="submit-btn">
+                  submit
+                </button>
+                <!-- <button type="button" id="modifyBtn" disabled>Modify</button> -->
+                <!-- <button type="button" id="deleteBtn"  disabled>Delete</button> -->
+              </div>
+            </form>
+          </div>
+
+          <!-- about table -->
+          <div class="projects-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>About</th>
+                  <th style="text-align: end">Actions</th>
+                </tr>
+              </thead>
+
+              {%for aboutdata in aboutdatas %}
+              <tbody id="projectsList">
+                <li>
+                  <tr>
+                    <td>{{ aboutdata.content|truncatechars:90 }}</td>
+
+                    <td style="text-align: end">
+                      <a
+                        href="{% url 'update_about' aboutdata.id %}"
+                        class="modify-btn"
+                        style="text-decoration: none; color: #000"
+                        >Modify</a
+                      >
+                      <!-- <form method="POST" action=""
+                                            style="display:inline;"
+                                            onsubmit="return confirm('Are you sure you want to delete this skill?');">
+                                            {% csrf_token %}
+                                            <button type="submit" class="delete-btn">Delete</button>
+                                        </form> -->
+                    </td>
+                  </tr>
+                </li>
+              </tbody>
+              {%endfor%}
+            </table>
+          </div>
+        </div>
+
+        <!-- skills View -->
+        <div id="skillsView" class="projects-view" style="display: none">
+          <div class="header">
+            <h1>Manage Skills</h1>
+          </div>
+
+          <!-- skill Form -->
+          <div class="project-form">
+            <h2>Links</h2>
+            <form id="projectForm" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+
+              <input type="hidden" name="form_type" value="skill" />
+              <div class="form-group">
+                <label for="skills">Skill</label>
+                <input type="text" name="skill" id="projectName" required />
+              </div>
+              <div class="form-group">
+                <label for="skills">Upload image</label>
+                <input type="file" name="logo" id="projectName" required />
+              </div>
+
+              <div class="form-buttons">
+                <button type="submit" id="submitBtn" class="submit-btn">
+                  Add
+                </button>
+                <!-- <button type="button" id="modifyBtn" disabled>Modify</button> -->
+                <!-- <button type="button" id="deleteBtn"  disabled>Delete</button> -->
+              </div>
+            </form>
+          </div>
+          <!-- skill table -->
+          <div class="projects-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Skill Name</th>
+                  <th>Skill Image</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="projectsList">
+                <!-- Projects will be populated here -->
+                {% for skill in skills %}
+                <li>
+                  <tr>
+                    <td>{{ skill.skill|truncatechars:20 }}</td>
+                    <td>{{ skill.logo }}</td>
+                    <td>
+                      <form
+                        method="POST"
+                        action="{% url 'skill_delete' skill.id %}"
+                        style="display: inline"
+                        onsubmit="return confirm('Are you sure you want to delete this skill?');"
+                      >
+                        {% csrf_token %}
+                        <button type="submit" class="delete-btn">Delete</button>
+                      </form>
+                    </td>
+                  </tr>
+                </li>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+                <!-- Profile image View -->
+        <div id="profileimgView" class="projects-view" style="display: none">
+                    <div class="header">
+                      <h1>Manage Profile Image</h1>
+                    </div>
+          
+                    <!-- skill Form -->
+                    <div class="project-form">
+                      <h2>Image</h2>
+                      <form id="projectForm" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+          
+                        <input type="hidden" name="form_type" value="profileimg" />
+        
+                        <div class="form-group">
+                          <label for="skills">Upload image</label>
+                          <input type="file" name="profileimg" id="projectName" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="skills">Upload Resume</label>
+                            <input type="file" name="resume" id="projectName" required />
+                          </div>         
+                        <div class="form-buttons">
+                          <button type="submit" id="submitBtn" class="submit-btn">
+                            Upload
+                          </button>
+                          <!-- <button type="button" id="modifyBtn" disabled>Modify</button> -->
+                          <!-- <button type="button" id="deleteBtn"  disabled>Delete</button> -->
+                        </div>
+                      </form>
+                    </div>
+                    <!-- skill table -->
+                    <div class="projects-table">
+                      <table>
+                        <thead>
+                          <tr>
+                        
+                            <th>Profile Image</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody id="projectsList">
+                          <!-- Projects will be populated here -->
+                          
+                          <li>
+                            {%if profileimgdetails%}
+                            <tr>
+                             
+                              <td><img style="width: 150px; height: auto; display: block;" src="{{profileimgdetails.profileimg.url}}" alt="Profile photo"></td>
+                              
+                              
+                              <td>
+                                <button type="button" class="modify-btn" id="modifyBtn" ><a style="text-decoration: none; color: #000;" href="{% url 'edit_profileimg' %}">Modify</a></button>
+                                <button type="button" class="delete-btn" onclick="return confirm('Are you sure to delete profile image?');" ><a style="text-decoration: none; color: #000;" href="{% url 'delete_profileimg' %}">Delete</a></button>
+
+                              </td>
+                              {%else%}
+                              <td>No Image uploaded</td>
+                              <td>
+                                <button type="button" class="modify-btn" id="modifyBtn" ><a style="text-decoration: none; color: #000;" href="{% url 'edit_profileimg' %}">Modify</a></button>
+                                <button type="button" class="delete-btn" onclick="return confirm('Are you sure to delete profile image?');" ><a style="text-decoration: none; color: #000;" href="{% url 'delete_profileimg' %}">Delete</a></button>
+
+                              </td>
+                            </tr>
+                            {%endif%}
+                          </li>
+                        
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+
+        <!-- socialmediaLink View -->
+        <div id="socialmediaView" class="projects-view" style="display: none">
+          <div class="header">
+            <h1>Manage social-links</h1>
+          </div>
+
+          <!-- socialmedia Form -->
+          <div class="project-form">
+            <h2>Links</h2>
+            <form id="projectForm" method="POST">
+              {% csrf_token %}
+
+              <input type="hidden" name="form_type" value="socialmedia" />
+              <div class="form-group">
+                <label for="LinkedIn">LinkedIn Url</label>
+                <input type="url" name="linkedin" id="projectName" required />
+              </div>
+              <div class="form-group">
+                <label for="projectDescription">Twitter Url</label>
+                <input type="url" id="projectTech" name="twitter" required />
+              </div>
+              <div class="form-group">
+                <label for="projectTech">Github Url</label>
+                <input type="url" id="projectTech" name="github" required />
+              </div>
+              <div class="form-group">
+                <label for="projectUrl">YouTube Url</label>
+                <input type="url" id="projectUrl" name="youtube" required />
+              </div>
+              <div class="form-buttons">
+                <button type="submit" id="submitBtn" class="submit-btn">
+                  Submit
+                </button>
+                <!-- <button type="button" id="modifyBtn" disabled>Modify</button> -->
+                <!-- <button type="button" id="deleteBtn"  disabled>Delete</button> -->
+              </div>
+            </form>
+          </div>
+          <!-- skill table -->
+          <div class="projects-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Linkedin</th>
+                  <th>Twitter</th>
+                  <th>GitHub</th>
+                  <th>YouTube</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="projectsList">
+                <!-- Social links will be  here -->
+                {%if sociallinks %}
+                <li>
+                  <tr>
+                    <td>{{sociallinks.linkedin}}</td>
+                    <td>{{sociallinks.twitter}}</td>
+                    <td>{{sociallinks.github}}</td>
+                    <td>{{sociallinks.youtube}}</td>
+                    <td>
+                      <a
+                        href="{%url 'edit_sociallink'%}"
+                        class="modify-btn"
+                        style="text-decoration: none; color: #000"
+                        >Modify</a
+                      >
+                      <!-- <button class="delete-btn">Delete</button> -->
+                    </td>
+                  </tr>
+                </li>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Projects View -->
+        <div id="projectsView" class="projects-view" style="display: none">
+          <div class="header">
+            <h1>Manage Projects</h1>
+          </div>
+
+          <!-- Project Form -->
+          <div class="project-form">
+            <h2>Project Details</h2>
+            <form id="projectForm" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="form_type" value="projectdetail" />
+              <div class="form-group">
+                <label for="projectName">Project Name</label>
+                <input type="text" name="name" id="projectName" required />
+              </div>
+              <div class="form-group">
+                <label for="projectDescription">Description</label>
+                <textarea
+                  id="projectDescription"
+                  name="desc"
+                  required
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <label for="projectTech">Technologies Used</label>
+                <input type="text" id="projectTech" name="tech" required />
+              </div>
+              <div class="form-group">
+                <label for="projectUrl">Project URL</label>
+                <input type="url" id="projectUrl" name="url" required />
+              </div>
+              <div class="form-buttons">
+                <button type="submit" id="submitBtn" class="submit-btn">
+                  Submit
+                </button>
+                <!-- <button type="button" id="modifyBtn" disabled>Modify</button> -->
+                <!-- <button type="button" id="deleteBtn"  disabled>Delete</button> -->
+              </div>
+            </form>
+            {% if messages %}
+            <div class="messages">
+              {% for message in messages %}
+              <!-- <p class="{{ message.tags }}">{{ message }}</p> -->
+              <script>
+                // Show a JavaScript alert for the message
+                alert("{{ message }}");
+              </script>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+
+          <div class="projects-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Project Name</th>
+                  <th>Description</th>
+                  <th>Technologies</th>
+                  <th>URL</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="projectsList">
+                <!-- Projects will be populated here -->
+                {% for project in projects %}
+                <li>
+                  <tr>
+                    <td>{{ project.name|truncatechars:20 }}</td>
+                    <td>{{ project.desc|truncatechars:30 }}</td>
+                    <td>{{ project.tech|truncatechars:20 }}</td>
+                    <td>
+                      <a href="{{ project.url }}" target="_blank"
+                        >{{project.url|truncatechars:20}}</a
+                      >
+                    </td>
+                    <td>
+                      <!-- <button class="modify-btn"><a href="" style="text-decoration: none; color: #000;" >Modify</a></button> -->
+                      <a
+                        href="{% url 'update_project' project.id %}"
+                        class="modify-btn"
+                        style="text-decoration: none; color: #000"
+                        >Modify</a
+                      >
+                      <form
+                        method="POST"
+                        action="{% url 'delete_project' project.id %}"
+                        style="display: inline"
+                        onsubmit="return confirm('Are you sure you want to delete this project?');"
+                      >
+                        {% csrf_token %}
+                        <button class="delete-btn">Delete</button>
+                      </form>
+                      <!-- <button  onclick="confirmDelete({{ project.id }})" class="delete-btn">Delete</button> -->
+                    </td>
+                  </tr>
+                </li>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script>
+      // Store projects in localStorage
+      let projects = JSON.parse(localStorage.getItem("projects")) || [];
+      let selectedProjectIndex = null;
+
+      // View elements
+      const dashboardView = document.getElementById("dashboardView");
+      const projectsView = document.getElementById("projectsView");
+      const socialmediaView = document.getElementById("socialmediaView");
+      const skillsView = document.getElementById("skillsView");
+      const aboutView = document.getElementById("aboutView");
+      const profileimgView = document.getElementById("profileimgView");
+      // Form elements
+      // const projectForm = document.getElementById('projectForm');
+      // const projectName = document.getElementById('projectName');
+      // const projectDescription = document.getElementById('projectDescription');
+      // const projectTech = document.getElementById('projectTech');
+      // const projectUrl = document.getElementById('projectUrl');
+      // const submitBtn = document.getElementById('submitBtn');
+      // const modifyBtn = document.getElementById('modifyBtn');
+      // const deleteBtn = document.getElementById('deleteBtn');
+
+      // Navigation handlers
+      document
+        .getElementById("dashboardLink")
+        .addEventListener("click", (e) => {
+          e.preventDefault();
+          showDashboard();
+        });
+
+      document.getElementById("projectsLink").addEventListener("click", (e) => {
+        e.preventDefault();
+        showProjects();
+      });
+
+      document
+        .getElementById("socialmediaLink")
+        .addEventListener("click", (e) => {
+          e.preventDefault();
+          showSocialmedia();
+        });
+      document.getElementById("skillsLink").addEventListener("click", (e) => {
+        e.preventDefault();
+        showSkills();
+      });
+      document.getElementById("aboutLink").addEventListener("click", (e) => {
+        e.preventDefault();
+        showAbout();
+      });
+      document.getElementById("profileimg").addEventListener("click", (e) => {
+        e.preventDefault();
+        showProfileimg();
+      });
+
+      function showDashboard() {
+        dashboardView.style.display = "block";
+        socialmediaView.style.display = "none";
+        projectsView.style.display = "none";
+        skillsView.style.display = "none";
+        aboutView.style.display = "none";
+        profileimgView.style.display = "none";
+
+        setActiveLink("dashboardLink");
+      }
+
+      function showSocialmedia() {
+        dashboardView.style.display = "none";
+        socialmediaView.style.display = "block";
+        projectsView.style.display = "none";
+        skillsView.style.display = "none";
+        aboutView.style.display = "none";
+        profileimgView.style.display = "none";
+
+        setActiveLink("socialmediaLink");
+      }
+
+      function showProjects() {
+        dashboardView.style.display = "none";
+        socialmediaView.style.display = "none";
+        projectsView.style.display = "block";
+        skillsView.style.display = "none";
+        aboutView.style.display = "none";
+        profileimgView.style.display = "none";
+
+        setActiveLink("projectsLink");
+      }
+      function showSkills() {
+        dashboardView.style.display = "none";
+        socialmediaView.style.display = "none";
+        projectsView.style.display = "none";
+        skillsView.style.display = "block";
+        aboutView.style.display = "none";
+        profileimgView.style.display = "none";
+
+        setActiveLink("skillsLink");
+      }
+      function showAbout() {
+        dashboardView.style.display = "none";
+        socialmediaView.style.display = "none";
+        projectsView.style.display = "none";
+        skillsView.style.display = "none";
+        aboutView.style.display = "block";
+        profileimgView.style.display = "none";
+
+        setActiveLink("aboutLink");
+      }
+      function showProfileimg() {
+        dashboardView.style.display = "none";
+        socialmediaView.style.display = "none";
+        projectsView.style.display = "none";
+        skillsView.style.display = "none";
+        aboutView.style.display = "none";
+        profileimgView.style.display = "block";
+        setActiveLink("profileimg");
+      }
+
+      function setActiveLink(linkId) {
+        // Remove active class from all links
+        document.querySelectorAll(".sidebar a").forEach((link) => {
+          link.classList.remove("active");
+        });
+        // Add active class to clicked link
+        document.getElementById(linkId).classList.add("active");
+      }
+
+      // Function to save projects to localStorage
+      // function saveProjects() {
+      //     localStorage.setItem('projects', JSON.stringify(projects));
+      // }
+
+      // Function to render projects
+      // function renderProjects() {
+      //     const projectsList = document.getElementById('projectsList');
+      //     projectsList.innerHTML = '';
+
+      //     projects.forEach((project, index) => {
+      //         const row = document.createElement('tr');
+      //         row.innerHTML = `
+      //             <td>${project.name}</td>
+      //             <td>${project.description}</td>
+      //             <td>${project.technologies}</td>
+      //             <td><a href="${project.url}" target="_blank">${project.url}</a></td>
+      //             <td class="action-buttons">
+      //                 <button class="edit-btn" onclick="selectProject(${index})">Select</button>
+      //             </td>
+      //         `;
+      //         projectsList.appendChild(row);
+      //     });
+      // }
+
+      // Function to clear form
+      // function clearForm() {
+      //     projectForm.reset();
+      //     selectedProjectIndex = null;
+      //     modifyBtn.disabled = true;
+      //     deleteBtn.disabled = true;
+      //     submitBtn.disabled = false;
+      // }
+
+      // Function to select project for editing
+      function selectProject(index) {
+        selectedProjectIndex = index;
+        const project = projects[index];
+
+        projectName.value = project.name;
+        projectDescription.value = project.description;
+        projectTech.value = project.technologies;
+        projectUrl.value = project.url;
+
+        modifyBtn.disabled = false;
+        deleteBtn.disabled = false;
+        submitBtn.disabled = true;
+      }
+
+      // Submit form handler
+      // projectForm.addEventListener('submit', (e) => {
+      //     e.preventDefault();
+
+      //     const newProject = {
+      //         name: projectName.value,
+      //         description: projectDescription.value,
+      //         technologies: projectTech.value,
+      //         url: projectUrl.value
+      //     };
+
+      //     projects.push(newProject);
+      //     saveProjects();
+      //     renderProjects();
+      //     clearForm();
+      // });
+
+      // Modify button handler
+      modifyBtn.addEventListener("click", () => {
+        if (selectedProjectIndex !== null) {
+          projects[selectedProjectIndex] = {
+            name: projectName.value,
+            description: projectDescription.value,
+            technologies: projectTech.value,
+            url: projectUrl.value,
+          };
+
+          saveProjects();
+          renderProjects();
+          clearForm();
+        }
+      });
+
+      // Delete button handler
+      deleteBtn.addEventListener("click", () => {
+        if (
+          selectedProjectIndex !== null &&
+          confirm("Are you sure you want to delete this project?")
+        ) {
+          projects.splice(selectedProjectIndex, 1);
+          saveProjects();
+          renderProjects();
+          clearForm();
+        }
+      });
+
+      // Logout functionality
+      // document.getElementById('logout').addEventListener('click', () => {
+      //     if (confirm('Are you sure you want to logout?')) {
+      //         window.location.href = 'login.html';
+      //     }
+      // });
+
+      // Initial render and view setup
+      // renderProjects();
+      showDashboard(); // Show dashboard by default
+    </script>
+  </body>
+</html>

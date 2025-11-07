@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details - Pruthviraj</title>
+    <!-- Include the same styles from main page -->
+    <style>
+        /* Include all the previous styles from main page */
+        /* ... (Previous styles for root variables, background pattern, navbar, etc.) ... */
+        /* Color Variables */
+        :root {
+            --primary-yellow: #ffd700;
+            --secondary-yellow: #fff3b0;
+            --accent-yellow: #ffe169;
+            --text-dark: #2d2d2d;
+            --text-light: #666666;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, var(--primary-yellow), var(--secondary-yellow));
+            padding: 2rem;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        :root {
+            --primary-yellow: #ffd700;
+            --secondary-yellow: #fff3b0;
+            --accent-yellow: #ffe169;
+            --text-dark: #2d2d2d;
+            --text-light: #666666;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .background-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(135deg, transparent 45%, var(--secondary-yellow) 45%, var(--secondary-yellow) 55%, transparent 55%),
+                linear-gradient(45deg, transparent 45%, var(--accent-yellow) 45%, var(--accent-yellow) 55%, transparent 55%);
+            background-size: 120px 120px;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        /* Social Links Bar */
+        .social-links {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: var(--text-dark);
+            text-decoration: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+            color: var(--primary-yellow);
+        }
+
+        /* Updated Navbar */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .logo-container {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-yellow);
+        }
+
+        /* Hero Section */
+        .header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--primary-yellow);
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .social-links {
+                position: static;
+                flex-direction: row;
+                justify-content: center;
+                padding: 1rem;
+                transform: none;
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .nav-brand .brand-name {
+                font-size: 1.2rem;
+            }
+        }
+        /* Project Details Specific Styles */
+        .project-details {
+            padding-top: 120px; /* Increased to account for fixed navbar */
+            padding-bottom: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        .project-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .project-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .project-meta {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: var(--secondary-yellow);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-meta h2 {
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .project-meta h3 {
+            margin: 1.5rem 0 1rem;
+            color: var(--text-dark);
+        }
+
+        .tools-used {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tool-tag {
+            background: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .project-screenshots {
+            margin: 2rem 0;
+        }
+
+
+
+        .demo-button-container {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .live-demo-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--primary-yellow);
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .live-demo-btn:hover {
+            background: var(--accent-yellow);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .back-to-projects {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .back-to-projects:hover {
+            color: var(--primary-yellow);
+        }
+
+        /* Hamburger Menu */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 9000;
+}
+
+.hamburger span {
+    width: 100%;
+    height: 3px;
+    background: black;
+    border-radius: 10px;
+    transition: all 0.3s linear;
+}
+
+@media (max-width: 680px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 64px;
+        right: 0; /* Changed from left to right */
+        height: 100vh;
+        width: 250px; /* Adjust this for automatic width */
+        max-width: 80%;
+        background: #ffe169;
+        padding: 50px 20px;
+        gap: 15px;
+        align-items: center;
+        border-left: 1px solid rgba(25, 125, 255, 0.504);
+        transform: translateX(100%); /* Initially hidden on the right */
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .nav-links.active {
+        transform: translateX(0); /* Slides in from the right */
+    }
+
+    .hamburger.active span:first-child {
+        transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:last-child {
+        transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    .nav-links a {
+        color: #000000;
+        font-size: 18px;
+        /* font-family: 'Playfair Display', serif; */
+    }
+
+    .nav-links li {
+        margin-left: 0px;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Background Pattern -->
+    <div class="background-pattern"></div>
+
+    <!-- Social Links -->
+    <div class="social-links">
+        <a href="#" aria-label="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a href="#" aria-label="Twitter">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+        </a>
+        <a href="#" aria-label="YouTube">
+            <i class="fab fa-youtube"></i>
+        </a>
+    </div>
+
+ <!-- Navigation -->
+ {% load static %}
+ <nav class="nav">
+     <a href="{%url 'home'%}" class="nav-brand">
+         <!-- <div class="logo-container"> -->
+             <!-- Replace with your logo -->
+             <!-- <img src="{% static 'images/logo.jpg' %}" alt="Logo" class="logo-img"> -->
+         <!-- </div> -->
+         <span class="brand-name">Pruthviraj</span>
+     </a>
+
+     <ul class="nav-links" id="nav-menu">
+         <li><a href="{%url 'home'%}">Home</a></li>
+         <li><a href="{%url 'home'%}">About</a></li>
+         <li><a href="{%url 'home'%}">Projects</a></li>
+         <li><a href="{%url 'home'%}">Contact</a></li>
+     </ul>
+     <div class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <script>
+        function toggleMenu() {
+            document.getElementById('nav-menu').classList.toggle('active');
+            document.querySelector('.hamburger').classList.toggle('active');
+
+
+            // Close the menu when clicking on a link
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        document.getElementById('nav-menu').classList.remove('active');
+        document.querySelector('.hamburger').classList.remove('active');
+    });
+});
+        }
+        </script>
+ </nav>
+    <!-- <div class="debug-info">
+        <pre>{{ project }}</pre>
+    </div> -->
+    <!-- Project Details Content -->
+
+     {%if project%}
+     
+    <div class="project-details">
+        <div class="project-header">
+            <h1>{{project.name}}</h1>
+            <p></p>
+        </div>
+
+        <div class="project-meta">
+            <h2>Project Overview</h2>
+            <p style="text-align: justify;">{{ project.desc }}</p>
+            
+            <h3>Tools & Technologies Used</h3>
+            <div class="tools-used">
+                
+                <!-- <span class="tool-tag">React.js</span> -->
+                {% for tech in technologies %}
+                <span class="tool-tag">{{ tech }}</span>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="demo-button-container">
+            <a href="{{project.url}}" target="_blank" class="live-demo-btn">
+                View Live Demo
+            </a>
+            <br>
+            <a href="{%url 'viewallproject'%}" class="back-to-projects">
+                ← Back to Projects
+            </a>
+        </div>
+    </div>
+
+{%endif%}
+
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <script>
+        // Same JavaScript as main page for navbar functionality
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>

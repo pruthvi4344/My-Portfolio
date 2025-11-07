@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root {
+            --primary-yellow: #ffd700;
+            --secondary-yellow: #fff3b0;
+            --accent-yellow: #ffe169;
+            --text-dark: #2d2d2d;
+            --text-light: #666666;
+            --white: #ffffff;
+            --danger: #dc3545;
+            --success: #28a745;
+        }
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, var(--secondary-yellow), var(--accent-yellow));
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.login-box {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #ffd700;
+    border: none;
+    border-radius: 5px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #ffed4a;
+}
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        {% if messages %}
+        {% for message in messages %}
+            <p style="color: red; text-align: center; font-size: large; margin-bottom: 20px;">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+        <div class="login-box">
+            <h1>Admin Login</h1>
+            <form id="loginForm" method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                    
+                </div>
+                <button type="submit"  class="login-btn">login</button>
+            </form>
+        </div>
+    </div>
+    <!-- <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    
+    // Add your authentication logic here
+    // This is a simple example - replace with actual authentication
+    if (username && password) {
+        // Simulate successful login
+        window.location.href = 'adminpanel.html';
+    } else {
+        alert('Please fill in all fields');
+    }
+});
+    </script> -->
+</body>
+</html>

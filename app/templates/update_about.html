@@ -1,0 +1,28 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="projectForm" method="POST">
+        {% csrf_token %}
+        
+        <!-- <input type="hidden" name="form_type" value="about"> -->
+        <div class="form-group">
+            <label for="skills">Enter you details </label>
+            <textarea type="text"
+            style="height: 100px; width: 500px;"
+            name="content" id="projectName"  required>
+            {{updateabout.content}}
+            </textarea>
+        </div>
+
+        <div class="form-buttons">
+            <button type="submit" id="submitBtn" class="submit-btn">submit</button>
+            <!-- <button type="button" id="modifyBtn" disabled>Modify</button> -->
+            <!-- <button type="button" id="deleteBtn"  disabled>Delete</button> -->
+        </div>
+    </form>
+</body>
+</html>
