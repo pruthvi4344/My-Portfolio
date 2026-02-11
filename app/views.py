@@ -29,7 +29,7 @@ def update_about(request, about_id):
             return redirect('adminpanel')
     return render(request,'update_about.html',{'updateabout':updateabout})
 
-
+#skill delete function
 def skill_delete(request, skill_id):
     if not request.session.get('user_id'):
         messages.error(request, "You need to log in to access this page.")
