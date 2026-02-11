@@ -66,7 +66,7 @@ def update_project(request, project_id):
 
     return render(request, 'update_project.html', {'project':project})
 
-
+# project delete function
 def delete_project(request, project_id):
     if not request.session.get('user_id'):
         messages.error(request, "You need to log in to access this page.")
